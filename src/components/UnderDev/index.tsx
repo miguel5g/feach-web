@@ -13,7 +13,7 @@ const UnderDev: React.FC = () => (
     </Head>
 
     <Container>
-      <Image src="in-progress.svg" />
+      <Image src="/svg/in-progress.svg" />
 
       <Title>Página em desenvolvimento</Title>
       <Description>Estamos trabalhando nisso a todo vapor! 😅</Description>

@@ -31,7 +31,7 @@ const Header: React.FC = () => {
   return (
     <>
       <Container>
-        <Logo src="logo.svg" />
+        <Logo src="/svg/logo.svg" />
 
         <Nav>
           <Link href="/" passHref>
@@ -52,7 +52,7 @@ const Header: React.FC = () => {
           ? (
             <UserContainer>
               <Username>{user.username}</Username>
-              <UserAvatar src="/default_user.svg" />
+              <UserAvatar src="/svg/default_user.svg" />
             </UserContainer>
           )
           : (

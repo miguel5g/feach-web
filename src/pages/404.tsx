@@ -13,7 +13,7 @@ const NotFound: React.FC = () => (
     </Head>
 
     <Container>
-      <Image src="404.svg" />
+      <Image src="/svg/404.svg" />
 
       <Title>Página não encontrada</Title>
       <Description>Desculpe-nos, não econtramos a página que procura</Description>
