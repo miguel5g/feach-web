@@ -44,7 +44,7 @@ export const Creator = styled.span`
   color: ${({ theme }) => theme.txt.primary};
 
   & > a {
-    color: ${({ theme }) => theme.app.secondary};
+    color: ${({ theme }) => theme.app.primary};
     font-style: italic;
   }
 

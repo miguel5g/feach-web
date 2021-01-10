@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { FiLogIn, FiMenu, FiX } from 'react-icons/fi';
@@ -24,18 +25,56 @@ interface IUser {
   username: string;
 }
 
+interface ILocalData {
+  lastCheck: number;
+  isAuth: boolean;
+  data?: IUser;
+}
+
 const Header: React.FC = () => {
   const [isAuth, setAuth] = useState(false);
   const [isOpen, setOpen] = useState(false);
   const [user, setUser] = useState<IUser>();
 
   useEffect(() => {
-    api.get<IUser>('/user', { withCredentials: true })
-      .then(({ data }) => {
-        setUser({ id: data.id, username: data.username });
-        setAuth(true);
-      })
-      .catch(() => {});
+    function getUserData() {
+      api.get<IUser>('/user', { withCredentials: true })
+        .then(({ data }) => {
+          setUser({ id: data.id, username: data.username });
+          setAuth(true);
+
+          localStorage.setItem('@feach/user-data', JSON.stringify({
+            lastCheck: Date.now(),
+            isAuth: true,
+            data: { id: data.id, username: data.username },
+          }));
+        })
+        .catch(() => {
+          localStorage.setItem('@feach/user-data', JSON.stringify({
+            lastCheck: Date.now(),
+            isAuth: false,
+            data: undefined,
+          }));
+        });
+    }
+
+    const userData: ILocalData | undefined = JSON.parse(localStorage.getItem('@feach/user-data'));
+
+    // const dayMs = 1000 * 5;
+    // 30 min
+    const maxAge = 1000 * 60 * 60 * 0.5;
+
+    if (userData && userData.lastCheck > (Date.now() - maxAge) && userData.isAuth) {
+      setUser({ id: userData.data.id, username: userData.data.username });
+      setAuth(true);
+      console.log('[Feach] Sessão local valida.');
+    } else if (userData && userData.lastCheck <= (Date.now() - maxAge)) {
+      getUserData();
+      console.log('[Feach] Sessão local invalida.');
+    } else if (!userData) {
+      getUserData();
+      console.log('[Feach] Sessão local não foi encontrada.');
+    }
   }, []);
 
   function toggleHeader() {

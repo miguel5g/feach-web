@@ -25,6 +25,7 @@ const Login: React.FC = () => {
   function handleSubmit(data: IFormData) {
     api.post('/session', data, { withCredentials: true })
       .then(() => {
+        localStorage.removeItem('@feach/user-data');
         toast.success('Login efetuado com sucesso!', { pauseOnHover: false });
         setTimeout(() => {
           router.push('/');
