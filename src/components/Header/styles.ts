@@ -13,7 +13,6 @@ export const Container = styled.header`
   min-height: 70px;
 
   background-color: ${({ theme }) => theme.bg.primary};
-  border-bottom: solid 1px rgba(0, 0, 0, 0.04);
   box-shadow: 0 7px 6px 0 rgba(33, 43, 54, 0.04);
 
   transition: padding 0.15s;
