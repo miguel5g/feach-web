@@ -16,11 +16,18 @@ export const Container = styled.header`
   box-shadow: 0 7px 6px 0 rgba(33, 43, 54, 0.04);
 
   transition: padding 0.15s;
+  overflow: hidden;
   
-  @media (max-width: 768px) {
+  @media (max-width: 826px) {
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    align-items: flex-start;
+
+    height: 70px;
+    padding: 13px 30px;
+
+    &.open {
+      height: max-content;
+    }
   }
 `;
 
@@ -29,13 +36,20 @@ export const Logo = styled.img`
 
   height: 40px;
 
+  @media (max-width: 900px) {
+    margin-right: 13px;
+  }
+
   @media (max-width: 768px) {
     margin-right: 0;
   }
 `;
 
 export const Nav = styled.nav`
-  @media (max-width: 768px) {
+  display: flex;
+
+  @media (max-width: 826px) {
+    flex-direction: column;
     margin-top: 15px;
   }
 `;
@@ -56,6 +70,14 @@ export const NavItem = styled.a`
     color: ${({ theme }) => theme.txt.primary};
     background-color: ${({ theme }) => theme.bg.tertiary}
   }
+
+  @media (max-width: 900px) {
+    margin: 0 3px;
+  }
+
+  @media (max-width: 826px) {
+    margin: 0;
+  }
 `;
 
 export const UserContainer = styled.div`
@@ -69,6 +91,10 @@ export const UserContainer = styled.div`
   background-color: ${({ theme }) => theme.bg.tertiary};
 
   cursor: pointer;
+
+  @media (max-width: 768px) {
+    margin-left: 0;
+  }
 `;
 
 export const Username = styled.span`
@@ -91,6 +117,10 @@ export const Auth = styled.div`
   display: flex;
 
   margin-left: auto;
+
+  @media (max-width: 826px) {
+    margin-left: 0;
+  }
 `;
 
 export const AuthLink = styled(BaseLink)`
@@ -101,11 +131,50 @@ export const AuthLink = styled(BaseLink)`
   }
 `;
 
+export const ToggleHeader = styled.div`
+  display: none;
+  position: fixed;
+
+  top: 13px;
+  right: 30px;
+
+  color: ${({ theme }) => theme.txt.primary};
+
+  & > button:last-child {
+    display: none;
+  }
+
+  @media (max-width: 826px) {
+    display: initial;
+
+    &.open {
+      & > button:last-child {
+        display: initial;
+      }
+
+      & > button:first-child {
+        display: none;
+      }
+    }
+  }
+`;
+
+export const ToggleHeaderButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 44px;
+  width: 44px;
+
+  color: ${({ theme }) => theme.txt.primary};
+  font-size: 2rem;
+
+  border: none;
+  background: none;
+`;
+
 export const Spacer = styled.div`
   width: 100%;
   height: 70px;
-
-  @media (max-width: 768px) {
-    height: 106px;
-  }
 `;

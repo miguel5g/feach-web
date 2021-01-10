@@ -1,13 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { FiLogIn } from 'react-icons/fi';
+import { FiLogIn, FiMenu, FiX } from 'react-icons/fi';
 
 import api from '../../services/Api';
 
 import {
   Auth,
   AuthLink,
-  Container, Logo, Nav, NavItem, Spacer, UserAvatar, UserContainer, Username,
+  Container,
+  Logo,
+  Nav,
+  NavItem,
+  Spacer,
+  UserAvatar,
+  UserContainer,
+  Username,
+  ToggleHeader,
+  ToggleHeaderButton,
 } from './styles';
 
 interface IUser {
@@ -17,6 +26,7 @@ interface IUser {
 
 const Header: React.FC = () => {
   const [isAuth, setAuth] = useState(false);
+  const [isOpen, setOpen] = useState(false);
   const [user, setUser] = useState<IUser>();
 
   useEffect(() => {
@@ -28,9 +38,13 @@ const Header: React.FC = () => {
       .catch(() => {});
   }, []);
 
+  function toggleHeader() {
+    setOpen(!isOpen);
+  }
+
   return (
     <>
-      <Container>
+      <Container className={isOpen ? 'open' : ''}>
         <Logo src="/svg/logo.svg" />
 
         <Nav>
@@ -70,6 +84,15 @@ const Header: React.FC = () => {
               </Link>
             </Auth>
           )}
+
+        <ToggleHeader className={isOpen ? 'open' : ''}>
+          <ToggleHeaderButton type="button" onClick={toggleHeader}>
+            <FiMenu />
+          </ToggleHeaderButton>
+          <ToggleHeaderButton type="button" onClick={toggleHeader}>
+            <FiX />
+          </ToggleHeaderButton>
+        </ToggleHeader>
       </Container>
 
       <Spacer />
