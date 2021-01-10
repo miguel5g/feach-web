@@ -31,7 +31,8 @@ export const Logo = styled.img`
   height: 52px;
 
   @media (max-width: 768px) {
-    margin-right: 0;
+    margin: 0;
+    margin-bottom: 5px;
   }
 `;
 
@@ -47,7 +48,7 @@ export const Creator = styled.span`
     font-style: italic;
   }
 
-  @media (max-width: 1000px) {
+  @media (max-width: 900px) {
     margin: 0 auto;
     margin-top: 7px;
   }
