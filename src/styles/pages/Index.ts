@@ -121,10 +121,15 @@ export const S2GameItem = styled.li`
   border-radius: 13px;
   background-color: ${({ theme }) => theme.bg.primary};
 
+  transition: all 0.2s;
   overflow: hidden;
 
   &:last-child {
     margin-right: 0;
+  }
+
+  &:hover {
+    box-shadow: 0 0 23px 0 rgba(0, 0, 0, 0.5);
   }
 `;
 

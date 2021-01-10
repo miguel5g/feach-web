@@ -3,6 +3,9 @@ import React from 'react';
 import StyledLink, { IBaseLinkProps } from './styles';
 
 interface IProps extends IBaseLinkProps {
+  href?: string;
+  target?: string;
+  rel?: string;
   children?: React.ReactNode;
 }
 

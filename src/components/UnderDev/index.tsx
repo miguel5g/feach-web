@@ -9,7 +9,7 @@ import {
 const UnderDev: React.FC = () => (
   <>
     <Head>
-      <title>Ecoleta - Página em desenvolvimento</title>
+      <title>Feach - Página em desenvolvimento</title>
     </Head>
 
     <Container>
