@@ -6,8 +6,21 @@ import { FaDiscord } from 'react-icons/fa';
 import Header from '../components/Header';
 
 import {
-  S1, S2, Container, PageDesc, PageTitle, StyledLink, S1Image, S2Title, S2GameList, S2GameItem, S2GameTitle, S2GameIcon, S2GamePrice,
+  S1,
+  S2,
+  Container,
+  PageDesc,
+  PageTitle,
+  StyledLink,
+  S1Image,
+  S2Title,
+  S2GameList,
+  S2GameItem,
+  S2GameTitle,
+  S2GameIcon,
+  S2GamePrice,
 } from '../styles/pages/Index';
+import Footer from '../components/Footer';
 
 const Home: React.FC = () => (
   <>
@@ -86,6 +99,8 @@ const Home: React.FC = () => (
         </S2GameList>
       </S2>
     </Container>
+
+    <Footer />
   </>
 );
 
