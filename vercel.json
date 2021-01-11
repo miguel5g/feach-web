@@ -1,0 +1,5 @@
+{
+  "rewrites": [
+    { "source": "/api/discord/welcome.png", "destination": "/api/discord/welcome" }
+  ]
+}
