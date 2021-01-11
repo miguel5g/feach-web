@@ -1,7 +1,9 @@
 import styled from 'styled-components';
+import { motion } from 'framer-motion';
+
 import BaseLink from '../BaseLink';
 
-export const Container = styled.header`
+export const Container = styled(motion.header)`
   position: fixed;
   display: flex;
   justify-content: flex-start;
@@ -10,7 +12,7 @@ export const Container = styled.header`
   padding: 13px 60px;
   width: 100%;
   height: max-content;
-  min-height: 70px;
+  /* height: 70px; */
 
   background-color: ${({ theme }) => theme.bg.primary};
   box-shadow: 0 7px 10px 0 rgba(0, 0, 0, 0.15);
@@ -22,11 +24,10 @@ export const Container = styled.header`
     flex-direction: column;
     align-items: flex-start;
 
-    height: 70px;
     padding: 13px 30px;
 
     &.open {
-      height: max-content;
+      /* height: max-content; */
     }
   }
 `;

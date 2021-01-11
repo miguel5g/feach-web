@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { FaDiscord } from 'react-icons/fa';
 
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 import {
   S1,
@@ -20,7 +21,8 @@ import {
   S2GameIcon,
   S2GamePrice,
 } from '../styles/pages/Index';
-import Footer from '../components/Footer';
+
+import { AS1, AS2GameItem, AS2GameList } from '../animations/Index';
 
 const Home: React.FC = () => (
   <>
@@ -31,7 +33,11 @@ const Home: React.FC = () => (
     <Header />
 
     <Container>
-      <S1>
+      <S1
+        variants={AS1}
+        initial="hidden"
+        animate="visible"
+      >
         <div>
           <PageTitle>Feach Comunity</PageTitle>
           <PageDesc>
@@ -55,47 +61,24 @@ const Home: React.FC = () => (
       <S2>
         <S2Title>Jogos com descontos</S2Title>
 
-        <S2GameList>
-          <S2GameItem>
-            <S2GameIcon src="/svg/no-data.svg" />
-            <S2GameTitle>Minecraft</S2GameTitle>
-            <S2GamePrice>
-              R$30,50
-              <span>R$130,50</span>
-            </S2GamePrice>
-          </S2GameItem>
-          <S2GameItem>
-            <S2GameIcon src="/svg/no-data.svg" />
-            <S2GameTitle>Minecraft</S2GameTitle>
-            <S2GamePrice>
-              R$30,50
-              <span>R$130,50</span>
-            </S2GamePrice>
-          </S2GameItem>
-          <S2GameItem>
-            <S2GameIcon src="/svg/no-data.svg" />
-            <S2GameTitle>Minecraft</S2GameTitle>
-            <S2GamePrice>
-              R$30,50
-              <span>R$130,50</span>
-            </S2GamePrice>
-          </S2GameItem>
-          <S2GameItem>
-            <S2GameIcon src="/svg/no-data.svg" />
-            <S2GameTitle>Minecraft</S2GameTitle>
-            <S2GamePrice>
-              R$30,50
-              <span>R$130,50</span>
-            </S2GamePrice>
-          </S2GameItem>
-          <S2GameItem>
-            <S2GameIcon src="/svg/no-data.svg" />
-            <S2GameTitle>Minecraft</S2GameTitle>
-            <S2GamePrice>
-              R$30,50
-              <span>R$130,50</span>
-            </S2GamePrice>
-          </S2GameItem>
+        <S2GameList
+          variants={AS2GameList}
+          initial="hidden"
+          animate="visible"
+        >
+          {[1, 2, 3, 4, 5].map((index) => (
+            <S2GameItem
+              key={index}
+              variants={AS2GameItem}
+            >
+              <S2GameIcon src="/svg/no-data.svg" />
+              <S2GameTitle>Minecraft</S2GameTitle>
+              <S2GamePrice>
+                R$30,50
+                <span>R$130,50</span>
+              </S2GamePrice>
+            </S2GameItem>
+          ))}
         </S2GameList>
       </S2>
     </Container>

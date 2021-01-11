@@ -154,7 +154,7 @@ export default function getWelcomeTemplate({
       </div>
   
       <div id="text">
-        <span>Bem-Vindo</span>
+        <span>Bem-vindo</span>
         <h1>${username}<span id="user-discriminator">#${discriminator}</span></h1>
         <p>Visite <span id="rules-channel">#regras</span> para iniciar sua jornada</p>
   

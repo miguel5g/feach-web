@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import BaseLink from '../../components/BaseLink';
 
@@ -7,7 +8,7 @@ export const Container = styled.main`
   padding-bottom: 25px;
 `;
 
-const Section = styled.section`
+const Section = styled(motion.section)`
   display: flex;
 
   margin: 25px 60px;
@@ -102,7 +103,7 @@ export const S2Title = styled.h3`
   font-weight: normal;
 `;
 
-export const S2GameList = styled.ul`
+export const S2GameList = styled(motion.ul)`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -110,7 +111,7 @@ export const S2GameList = styled.ul`
   list-style: none;
 `;
 
-export const S2GameItem = styled.li`
+export const S2GameItem = styled(motion.li)`
   display: flex;
   flex-direction: column;
 

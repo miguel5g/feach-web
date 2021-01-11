@@ -83,7 +83,11 @@ const Header: React.FC = () => {
 
   return (
     <>
-      <Container className={isOpen ? 'open' : ''}>
+      <Container
+        className={isOpen ? 'open' : ''}
+        initial={{ height: 70, opacity: 0 }}
+        animate={{ height: isOpen ? 'max-content' : 70, opacity: 1 }}
+      >
         <Logo src="/svg/logo.svg" />
 
         <Nav>

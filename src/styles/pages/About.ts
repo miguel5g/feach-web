@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import styled from 'styled-components';
 
 import BaseLink from '../../components/BaseLink';
@@ -128,7 +129,7 @@ export const S2Cards = styled.ul`
   }
 `;
 
-export const S2Card = styled.li`
+export const S2Card = styled(motion.div)`
   display: flex;
   flex-direction: column;
   justify-content: center;
