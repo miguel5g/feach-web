@@ -4,9 +4,9 @@ import React from 'react';
 import Header from '../components/Header';
 import UnderDev from '../components/UnderDev';
 
-import { Container } from '../styles/pages/About';
+import { Container } from '../styles/pages/News';
 
-const Discounts: React.FC = () => (
+const News: React.FC = () => (
   <>
     <Head>
       <title>Feach - Jogos com descontos</title>

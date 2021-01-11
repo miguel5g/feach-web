@@ -93,8 +93,8 @@ const Header: React.FC = () => {
           <Link href="/games" passHref>
             <NavItem>Jogos</NavItem>
           </Link>
-          <Link href="/discounts" passHref>
-            <NavItem>Descontos</NavItem>
+          <Link href="/news" passHref>
+            <NavItem>Notícias</NavItem>
           </Link>
           <Link href="/about" passHref>
             <NavItem>Sobre</NavItem>
