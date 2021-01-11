@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -27,16 +27,23 @@ interface IFormData {
 
 const Register: React.FC = () => {
   const router = useRouter();
+  const [isEnable, setEnable] = useState(true);
 
   function handleSubmit(data: IFormData) {
+    if (!isEnable) return;
+
+    setEnable(false);
+
     api.post('/user', data)
       .then(() => {
         toast.success('Registro efetuado com sucesso!', { pauseOnHover: false });
         setTimeout(() => {
+          setEnable(true);
           router.push('/login');
         }, 5000);
       })
       .catch(() => {
+        setEnable(true);
         toast.error('Algo deu errado, verifique os dados e tente novamente.');
       });
   }
@@ -84,7 +91,11 @@ const Register: React.FC = () => {
 
           <ButtonGroup>
             <Button type="button" onClick={() => router.back()}>Voltar</Button>
-            <Button type="submit" primary>
+            <Button
+              type="submit"
+              disable={!isEnable}
+              primary
+            >
               <FiPlus />
               Criar
             </Button>

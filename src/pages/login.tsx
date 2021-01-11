@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -21,18 +21,25 @@ interface IFormData {
 
 const Login: React.FC = () => {
   const router = useRouter();
+  const [isEnable, setEnable] = useState(true);
 
   function handleSubmit(data: IFormData) {
+    if (!isEnable) return;
+
+    setEnable(false);
+
     api.post('/session', data, { withCredentials: true })
       .then(() => {
         localStorage.removeItem('@feach/user-data');
         toast.success('Login efetuado com sucesso!', { pauseOnHover: false });
         setTimeout(() => {
+          setEnable(true);
           router.push('/');
         }, 5000);
       })
       .catch(() => {
         toast.error('Algo deu errado, verifique os dados e tente novamente.');
+        setEnable(true);
       });
   }
 
@@ -69,7 +76,11 @@ const Login: React.FC = () => {
 
           <ButtonGroup>
             <Button type="button" onClick={() => router.back()}>Voltar</Button>
-            <Button type="submit" primary>
+            <Button
+              type="submit"
+              disable={!isEnable}
+              primary
+            >
               <FiLogIn />
               Entrar
             </Button>
