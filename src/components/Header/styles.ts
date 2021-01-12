@@ -18,13 +18,14 @@ export const Container = styled(motion.header)`
   box-shadow: 0 7px 10px 0 rgba(0, 0, 0, 0.15);
 
   transition: padding 0.15s;
-  overflow: hidden;
   
   @media (max-width: 826px) {
     flex-direction: column;
     align-items: flex-start;
 
     padding: 13px 30px;
+
+    overflow: hidden;
 
     &.open {
       /* height: max-content; */
@@ -82,19 +83,29 @@ export const NavItem = styled.a`
 `;
 
 export const UserContainer = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
 
   margin-left: auto;
-  padding: 3px 9px;
+  padding: 3px 3px 3px 13px;
 
   border-radius: 30px;
-  background-color: ${({ theme }) => theme.bg.tertiary};
 
   cursor: pointer;
+  transition: 0.2s;
 
-  @media (max-width: 768px) {
+  &:hover {
+    background-color: ${({ theme }) => theme.bg.tertiary};
+  }
+
+  &.open {
+    background-color: ${({ theme }) => theme.bg.tertiary};
+  }
+
+  @media (max-width: 826px) {
     margin-left: 0;
+    margin-top: 13px;
   }
 `;
 
@@ -114,6 +125,72 @@ export const UserAvatar = styled.img`
   /* box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5); */
 `;
 
+export const UserMenu = styled(motion.div)`
+  position: absolute;
+  display: none;
+  flex-direction: column;
+
+  padding: 10px 5px; 
+  margin-top: 13px;
+  top: 41px;
+  right: 0;
+
+  background: ${({ theme }) => theme.bg.tertiary};
+  border-radius: 4px;
+
+  &.open {
+    display: flex;
+  }
+`;
+
+export const UserMenuItem = styled.div`
+  width: 186px;
+  margin: 7px 0;
+
+  &:first-child {
+    margin-top: 0;
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  & > a, & > button {
+    display: flex;
+    align-items: center;
+
+    padding: 7px 3px;
+    width: 100%;
+    height: max-content;
+
+    background: none;
+    border: none;
+    border-radius: 4px;
+
+    color: ${({ theme, color }) => color || theme.txt.secondary};
+    font-size: 1.2rem;
+
+    transition: background 0.1s;
+
+    & > svg {
+      margin-right: 3px;
+    }
+
+    &:hover {
+      background: ${({ theme }) => theme.bg.primary};
+      color: ${({ theme, color }) => color || theme.txt.primary};
+    }
+  }
+`;
+
+export const UserMenuSeparator = styled.div`
+  width: 186px;
+  height: 1px;
+  margin: 3px 0;
+
+  background: rgba(18, 24, 63, 0.45);
+`;
+
 export const Auth = styled.div`
   display: flex;
 
@@ -121,6 +198,7 @@ export const Auth = styled.div`
 
   @media (max-width: 826px) {
     margin-left: 0;
+    margin-top: 13px;
   }
 `;
 

@@ -1,7 +1,10 @@
 /* eslint-disable no-console */
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { FiLogIn, FiMenu, FiX } from 'react-icons/fi';
+import { useRouter } from 'next/router';
+import {
+  FiLogIn, FiLogOut, FiMenu, FiUser, FiX,
+} from 'react-icons/fi';
 
 import api from '../../services/Api';
 
@@ -18,6 +21,9 @@ import {
   Username,
   ToggleHeader,
   ToggleHeaderButton,
+  UserMenu,
+  UserMenuItem,
+  UserMenuSeparator,
 } from './styles';
 
 interface IUser {
@@ -32,9 +38,12 @@ interface ILocalData {
 }
 
 const Header: React.FC = () => {
+  const router = useRouter();
   const [isAuth, setAuth] = useState(false);
   const [isOpen, setOpen] = useState(false);
+  const [isOpenUserMenu, setOpenUserMenu] = useState(false);
   const [user, setUser] = useState<IUser>();
+  const [cleanupListener, setCleanupListener] = useState<Function>();
 
   useEffect(() => {
     function getUserData() {
@@ -77,8 +86,41 @@ const Header: React.FC = () => {
     }
   }, []);
 
+  useEffect(() => {
+    function handleResize() {
+      if (window.innerWidth < 826 && isOpenUserMenu) setOpenUserMenu(false);
+      if (window.innerWidth > 826 && isOpen) setOpen(false);
+    }
+
+    function removeListener() {
+      if (window) window.removeEventListener('resize', handleResize);
+    }
+
+    if (window) {
+      if (cleanupListener) cleanupListener();
+      window.addEventListener('resize', handleResize);
+
+      setCleanupListener(() => removeListener);
+    }
+  }, [isOpenUserMenu, isOpen]);
+
   function toggleHeader() {
     setOpen(!isOpen);
+  }
+
+  function toggleUserMenu() {
+    const isMobile = window.innerWidth <= 826;
+
+    if (isMobile) router.push('/profile');
+
+    setOpenUserMenu(!isOpenUserMenu);
+  }
+
+  async function handleLogOut() {
+    window.localStorage.removeItem('@feach/user-data');
+    api.delete('/session', { withCredentials: true })
+      .then(() => router.reload())
+      .catch(() => {});
   }
 
   return (
@@ -107,9 +149,32 @@ const Header: React.FC = () => {
 
         {isAuth
           ? (
-            <UserContainer>
+            <UserContainer
+              className={isOpenUserMenu ? 'open' : ''}
+              onClick={toggleUserMenu}
+            >
               <Username>{user.username}</Username>
               <UserAvatar src="/svg/default_user.svg" />
+
+              <UserMenu className={isOpenUserMenu ? 'open' : ''}>
+                <UserMenuItem>
+                  <Link href="/profile" passHref>
+                    <a href="/profile">
+                      <FiUser />
+                      Perfil
+                    </a>
+                  </Link>
+                </UserMenuItem>
+
+                <UserMenuSeparator />
+
+                <UserMenuItem color="#ff0000">
+                  <button type="button" onClick={handleLogOut}>
+                    <FiLogOut />
+                    Desconectar
+                  </button>
+                </UserMenuItem>
+              </UserMenu>
             </UserContainer>
           )
           : (
