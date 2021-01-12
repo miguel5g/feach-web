@@ -29,6 +29,7 @@ import {
 interface IUser {
   id: string;
   username: string;
+  avatar_url: string | null;
 }
 
 interface ILocalData {
@@ -49,14 +50,14 @@ const Header: React.FC = () => {
     function getUserData() {
       api.get<IUser>('/user', { withCredentials: true })
         .then(({ data }) => {
-          setUser({ id: data.id, username: data.username });
+          setUser({ id: data.id, username: data.username, avatar_url: data.avatar_url });
           setAuth(true);
 
           localStorage.setItem('@feach/user-data', JSON.stringify({
             lastCheck: Date.now(),
             isAuth: true,
-            data: { id: data.id, username: data.username },
-          }));
+            data: { id: data.id, username: data.username, avatar_url: data.avatar_url },
+          } as ILocalData));
         })
         .catch(() => {
           localStorage.setItem('@feach/user-data', JSON.stringify({
@@ -74,7 +75,11 @@ const Header: React.FC = () => {
     const maxAge = 1000 * 60 * 60 * 0.5;
 
     if (userData && userData.lastCheck > (Date.now() - maxAge) && userData.isAuth) {
-      setUser({ id: userData.data.id, username: userData.data.username });
+      setUser({
+        id: userData.data.id,
+        username: userData.data.username,
+        avatar_url: userData.data.avatar_url,
+      });
       setAuth(true);
       console.log('[Feach] Sessão local valida.');
     } else if (userData && userData.lastCheck <= (Date.now() - maxAge)) {
@@ -154,7 +159,7 @@ const Header: React.FC = () => {
               onClick={toggleUserMenu}
             >
               <Username>{user.username}</Username>
-              <UserAvatar src="/svg/default_user.svg" />
+              <UserAvatar src={user.avatar_url ? user.avatar_url : '/svg/default_user.svg'} />
 
               <UserMenu className={isOpenUserMenu ? 'open' : ''}>
                 <UserMenuItem>
