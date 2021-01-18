@@ -1,7 +1,14 @@
 import axios from 'axios';
 
-const api = axios.create({
-  baseURL: process.env.API_URL || 'https://feach-server.herokuapp.com',
+const proApi = axios.create({
+  baseURL: 'https://feach-server.herokuapp.com',
 });
 
-export default api;
+const devApi = axios.create({
+  baseURL: 'http://localhost:3333',
+});
+
+export {
+  proApi,
+  devApi,
+};

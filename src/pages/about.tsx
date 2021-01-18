@@ -1,5 +1,6 @@
-import Head from 'next/head';
 import React from 'react';
+import Head from 'next/head';
+import { GetStaticProps } from 'next';
 import { FaDiscord } from 'react-icons/fa';
 import { FiDollarSign } from 'react-icons/fi';
 import { MdMoneyOff } from 'react-icons/md';
@@ -8,6 +9,7 @@ import { BiNetworkChart } from 'react-icons/bi';
 
 import Footer from '../components/Footer';
 import Header from '../components/Header';
+import { IPageProps } from '../typings';
 
 import {
   S1,
@@ -26,13 +28,13 @@ import {
   LinkGroup,
 } from '../styles/pages/About';
 
-const About: React.FC = () => (
+const About: React.FC<IPageProps> = ({ env }) => (
   <>
     <Head>
       <title>Feach - Sobre</title>
     </Head>
 
-    <Header />
+    <Header env={env} />
 
     <Container>
       <S1>
@@ -105,5 +107,15 @@ const About: React.FC = () => (
     <Footer />
   </>
 );
+
+export const getStaticProps: GetStaticProps = async () => {
+  const env = process.env.NODE_ENV || 'production';
+
+  return {
+    props: {
+      env,
+    },
+  };
+};
 
 export default About;

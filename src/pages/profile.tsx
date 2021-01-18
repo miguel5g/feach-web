@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import { GetStaticProps } from 'next';
 import {
   FiArrowLeft,
   FiCheckCircle,
@@ -8,9 +9,10 @@ import {
 } from 'react-icons/fi';
 import { TiBusinessCard } from 'react-icons/ti';
 import { BsInfoCircle } from 'react-icons/bs';
-
 import { FaDiscord } from 'react-icons/fa';
-import api from '../services/Api';
+
+import { proApi, devApi } from '../services/Api';
+import { IPageProps } from '../typings';
 
 import {
   Container, User, UserInfo, UserInfos, UserHeader, UserName, UserAvatar, LinkButton, BackButton,
@@ -30,15 +32,17 @@ interface IUserData {
   updated_at: string;
 }
 
-const permissionResolver: {[key: string]: string} = {
+const permissionResolver: { [key: string]: string } = {
   0: 'Usuário',
   1: 'Editor',
   2: 'Admin',
 };
 
-const Login: React.FC = () => {
+const Login: React.FC<IPageProps> = ({ env }) => {
   const router = useRouter();
   const [user, setUser] = useState<IUserData>();
+
+  const api = env === 'development' ? devApi : proApi;
 
   useEffect(() => {
     api.get<IUserData>('/user', { withCredentials: true })
@@ -117,7 +121,7 @@ const Login: React.FC = () => {
               <UserInfo>
                 <FaDiscord />
                 ID do Discord
-                <span>{user.discord_id ? user.discord_id : 'Não vinculado' }</span>
+                <span>{user.discord_id ? user.discord_id : 'Não vinculado'}</span>
               </UserInfo>
 
               <UserInfo>
@@ -147,6 +151,16 @@ const Login: React.FC = () => {
 
     </>
   );
+};
+
+export const getStaticProps: GetStaticProps = async () => {
+  const env = process.env.NODE_ENV || 'production';
+
+  return {
+    props: {
+      env,
+    },
+  };
 };
 
 export default Login;

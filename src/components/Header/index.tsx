@@ -6,7 +6,7 @@ import {
   FiLogIn, FiLogOut, FiMenu, FiUser, FiX,
 } from 'react-icons/fi';
 
-import api from '../../services/Api';
+import { proApi, devApi } from '../../services/Api';
 
 import {
   Auth,
@@ -38,13 +38,19 @@ interface ILocalData {
   data?: IUser;
 }
 
-const Header: React.FC = () => {
+interface IHeaderProps {
+  env?: 'development' | 'production';
+}
+
+const Header: React.FC<IHeaderProps> = ({ env }) => {
   const router = useRouter();
   const [isAuth, setAuth] = useState(false);
   const [isOpen, setOpen] = useState(false);
   const [isOpenUserMenu, setOpenUserMenu] = useState(false);
   const [user, setUser] = useState<IUser>();
   const [cleanupListener, setCleanupListener] = useState<Function>();
+
+  const api = env === 'development' ? devApi : proApi;
 
   useEffect(() => {
     function getUserData() {

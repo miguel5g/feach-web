@@ -1,10 +1,12 @@
 import React from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
+import { GetStaticProps } from 'next';
 import { FaDiscord } from 'react-icons/fa';
 
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import { IPageProps } from '../typings';
 
 import {
   S1,
@@ -24,13 +26,15 @@ import {
 
 import { AS1, AS2GameItem, AS2GameList } from '../animations/Index';
 
-const Home: React.FC = () => (
+interface IHomeProps extends IPageProps {}
+
+const Home: React.FC<IHomeProps> = ({ env }) => (
   <>
     <Head>
       <title>Feach - Sociedade secreta</title>
     </Head>
 
-    <Header />
+    <Header env={env} />
 
     <Container>
       <S1
@@ -86,5 +90,15 @@ const Home: React.FC = () => (
     <Footer />
   </>
 );
+
+export const getStaticProps: GetStaticProps = async () => {
+  const env = process.env.NODE_ENV || 'production';
+
+  return {
+    props: {
+      env,
+    },
+  };
+};
 
 export default Home;

@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
+import { GetStaticProps } from 'next';
 import { useRouter } from 'next/router';
 import { FiLock, FiLogIn, FiUser } from 'react-icons/fi';
 import { toast } from 'react-toastify';
 
-import api from '../services/Api';
+import { proApi, devApi } from '../services/Api';
+import { IPageProps } from '../typings';
 import Input from '../components/Input';
 import Button from '../components/Button';
 
@@ -19,9 +21,11 @@ interface IFormData {
   password: string;
 }
 
-const Login: React.FC = () => {
+const Login: React.FC<IPageProps> = ({ env }) => {
   const router = useRouter();
   const [isEnable, setEnable] = useState(true);
+
+  const api = env === 'development' ? devApi : proApi;
 
   function handleSubmit(data: IFormData) {
     if (!isEnable) return;
@@ -93,6 +97,16 @@ const Login: React.FC = () => {
       </Container>
     </>
   );
+};
+
+export const getStaticProps: GetStaticProps = async () => {
+  const env = process.env.NODE_ENV || 'production';
+
+  return {
+    props: {
+      env,
+    },
+  };
 };
 
 export default Login;
