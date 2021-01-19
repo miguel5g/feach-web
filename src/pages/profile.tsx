@@ -1,11 +1,19 @@
 import React, { useEffect, useState } from 'react';
+import { format } from 'date-fns';
+import ptBR from 'date-fns/locale/pt-BR';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { GetStaticProps } from 'next';
 import {
   FiArrowLeft,
   FiCheckCircle,
-  FiClock, FiHash, FiLink, FiLogIn, FiMail, FiUser,
+  FiClock,
+  FiHash,
+  FiLink,
+  FiLogIn,
+  FiMail,
+  FiUser,
+  FiX,
 } from 'react-icons/fi';
 import { TiBusinessCard } from 'react-icons/ti';
 import { BsInfoCircle } from 'react-icons/bs';
@@ -15,7 +23,21 @@ import { proApi, devApi } from '../services/Api';
 import { IPageProps } from '../typings';
 
 import {
-  Container, User, UserInfo, UserInfos, UserHeader, UserName, UserAvatar, LinkButton, BackButton,
+  Container,
+  User,
+  UserInfo,
+  UserInfos,
+  UserHeader,
+  UserName,
+  UserAvatar,
+  LinkButton,
+  BackButton,
+  LinkExample,
+  LETitle,
+  LEInstructions,
+  LEImage,
+  LECode,
+  LECommand,
 } from '../styles/pages/Profile';
 
 interface IUserData {
@@ -32,6 +54,10 @@ interface IUserData {
   updated_at: string;
 }
 
+interface ILinkResponse {
+  code: string;
+}
+
 const permissionResolver: { [key: string]: string } = {
   0: 'Usuário',
   1: 'Editor',
@@ -41,18 +67,39 @@ const permissionResolver: { [key: string]: string } = {
 const Login: React.FC<IPageProps> = ({ env }) => {
   const router = useRouter();
   const [user, setUser] = useState<IUserData>();
+  const [isOpenEx, setOpenEx] = useState(false);
+  const [linkCode, setLinkCode] = useState<string>();
 
   const api = env === 'development' ? devApi : proApi;
 
   useEffect(() => {
     api.get<IUserData>('/user', { withCredentials: true })
       .then(({ data }) => {
-        setUser(data);
+        setUser({
+          ...data,
+          created_at: format(new Date(data.created_at), 'dd </> MMMM </> yyyy', { locale: ptBR }).replaceAll('</>', 'de'),
+        });
       })
-      .catch(() => {
+      .catch((err) => {
+        console.error(err);
         router.replace('/login');
       });
   }, []);
+
+  function getLinkCode() {
+    if (linkCode) return;
+
+    api.get<ILinkResponse>('/link', { withCredentials: true })
+      .then(({ data }) => {
+        setLinkCode(data.code);
+      })
+      .catch(() => {});
+  }
+
+  function toggleLinkExample() {
+    getLinkCode();
+    setOpenEx(!isOpenEx);
+  }
 
   return (
     <>
@@ -131,8 +178,8 @@ const Login: React.FC<IPageProps> = ({ env }) => {
               </UserInfo>
             </UserInfos>
 
-            {user.discord_id && (
-              <LinkButton primary>
+            {!user.discord_id && (
+              <LinkButton onClick={toggleLinkExample} primary>
                 <FiLink />
                 Vincular Discord
               </LinkButton>
@@ -146,6 +193,44 @@ const Login: React.FC<IPageProps> = ({ env }) => {
           <FiArrowLeft />
           Voltar
         </BackButton>
+
+        {isOpenEx && (
+          <LinkExample>
+            <LETitle>Como vincular sua conta</LETitle>
+            <LEInstructions>
+              Copie o código que está logo abaixo e envie no privado do nosso bot usando o comando
+              {' '}
+              <span>
+                .link
+                {' '}
+                {linkCode}
+              </span>
+            </LEInstructions>
+
+            <LEImage src="https://i.ytimg.com/vi/bPMiXVzAtV0/maxresdefault.jpg" />
+
+            <LECode>
+              Seu código:
+              {' '}
+              <span>{linkCode}</span>
+            </LECode>
+
+            <LECommand>
+              Comando:
+              {' '}
+              <span>
+                .link
+                {' '}
+                {linkCode}
+              </span>
+            </LECommand>
+
+            <LinkButton onClick={toggleLinkExample} primary>
+              <FiX />
+              Fechar
+            </LinkButton>
+          </LinkExample>
+        )}
 
       </Container>
 

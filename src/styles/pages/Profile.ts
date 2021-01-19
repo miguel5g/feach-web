@@ -169,9 +169,92 @@ export const BackButton = styled.button`
   font-family: 'Ubuntu', sans-serif;
 
   cursor: pointer;
+  z-index: 11;
 
   & > svg {
     margin-right: 3px;
     color: ${({ theme }) => theme.app.primary}
+  }
+`;
+
+export const LinkExample = styled.div`
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  top: 0;
+  right: 0;
+  padding: 30px 100px;
+  width: 100vw;
+  height: 100vh;
+
+  background: rgba(0, 0, 0, 0.95);
+
+  z-index: 10;
+`;
+
+export const LETitle = styled.h4`
+  color: ${({ theme }) => theme.txt.primary};
+  font-size: 2rem;
+`;
+
+export const LEInstructions = styled.p`
+  margin-bottom: 16px;
+
+  font-size: 1.2rem;
+
+  & > span {
+    padding: 3px;
+
+    border-radius: 3px;
+    background: ${({ theme }) => theme.bg.tertiary};
+
+    color: ${({ theme }) => theme.app.primary};
+    font-family: 'Fira Code', monospace;
+    font-size: 1rem;
+  }
+`;
+
+export const LEImage = styled.img`
+  max-height: 256px;
+  height: auto;
+
+  border-radius: 7px;
+`;
+
+export const LECode = styled.div`
+  margin-top: 16px;
+
+  font-size: 1.2rem;
+
+  & > span {
+    padding: 3px;
+
+    border-radius: 3px;
+    background: ${({ theme }) => theme.bg.tertiary};
+
+    color: ${({ theme }) => theme.app.primary};
+    font-family: 'Fira Code', monospace;
+    font-size: 1rem;
+  }
+`;
+
+export const LECommand = styled.div`
+  margin-top: 7px;
+
+  font-size: 1.2rem;
+
+  & > span {
+    padding: 3px;
+
+    border-radius: 3px;
+    background: ${({ theme }) => theme.bg.tertiary};
+
+    color: ${({ theme }) => theme.app.primary};
+    font-family: 'Fira Code', monospace;
+    font-size: 1rem;
   }
 `;

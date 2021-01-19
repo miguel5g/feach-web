@@ -35,7 +35,8 @@ export default class MyDocument extends Document {
       <Html lang="pt-BR">
         <Head>
           <link href="./favicon.ico" rel="shortcut icon" type="image/x-icon" />
-          <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Ubuntu&display=swap" rel="stylesheet" />
+          <link rel="preconnect" href="https://fonts.gstatic.com" />
+          <link href="https://fonts.googleapis.com/css2?family=Fira+Code&family=Roboto&family=Ubuntu&display=swap" rel="stylesheet" />
 
           {/* SEO */}
           {/* Tags comentadas eu não sei como funcionam :) */}

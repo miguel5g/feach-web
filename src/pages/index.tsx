@@ -76,10 +76,10 @@ const Home: React.FC<IHomeProps> = ({ env }) => (
               variants={AS2GameItem}
             >
               <S2GameIcon src="/svg/no-data.svg" />
-              <S2GameTitle>Minecraft</S2GameTitle>
+              <S2GameTitle>Em breve!</S2GameTitle>
               <S2GamePrice>
-                R$30,50
-                <span>R$130,50</span>
+                R$00,00
+                <span>R$00,00</span>
               </S2GamePrice>
             </S2GameItem>
           ))}
