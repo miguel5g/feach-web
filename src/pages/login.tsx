@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
+import { AxiosError } from 'axios';
 import Head from 'next/head';
 import Link from 'next/link';
 import { GetStaticProps } from 'next';
 import { useRouter } from 'next/router';
-import { FiLock, FiLogIn, FiUser } from 'react-icons/fi';
+import {
+  FiAlertOctagon,
+  FiCheckCircle, FiLock, FiLogIn, FiUser,
+} from 'react-icons/fi';
 import { toast } from 'react-toastify';
 
 import { proApi, devApi } from '../services/Api';
@@ -13,7 +17,7 @@ import Button from '../components/Button';
 
 import {
   ButtonGroup,
-  Container, Register, StyledForm, Title,
+  Container, MDescription, Modal, MTitle, Register, StyledForm, Title,
 } from '../styles/pages/Login';
 
 interface IFormData {
@@ -24,8 +28,14 @@ interface IFormData {
 const Login: React.FC<IPageProps> = ({ env }) => {
   const router = useRouter();
   const [isEnable, setEnable] = useState(true);
+  const [modal, setModal] = useState<'success' | 'not_active'>();
 
   const api = env === 'development' ? devApi : proApi;
+
+  function handleSuccess() {
+    localStorage.removeItem('@feach/user-data');
+    router.push('/');
+  }
 
   function handleSubmit(data: IFormData) {
     if (!isEnable) return;
@@ -34,15 +44,20 @@ const Login: React.FC<IPageProps> = ({ env }) => {
 
     api.post('/session', data, { withCredentials: true })
       .then(() => {
-        localStorage.removeItem('@feach/user-data');
-        toast.success('Login efetuado com sucesso!', { pauseOnHover: false });
-        setTimeout(() => {
-          setEnable(true);
-          router.push('/');
-        }, 5000);
+        setModal('success');
       })
-      .catch(() => {
-        toast.error('Algo deu errado, verifique os dados e tente novamente.');
+      .catch(({ response }: AxiosError) => {
+        const { status } = response;
+
+        if (status === 401) {
+          const { data: resData }: {data: {message: string}} = response;
+
+          if (resData.message === 'Account not activated') setModal('not_active');
+          else toast.error('Algo deu errado, verifique os dados e tente novamente.');
+        } else {
+          toast.error('Algo deu errado, verifique os dados e tente novamente.');
+        }
+
         setEnable(true);
       });
   }
@@ -94,6 +109,37 @@ const Login: React.FC<IPageProps> = ({ env }) => {
             <Register>Não tem uma conta? Clique aqui!</Register>
           </Link>
         </StyledForm>
+
+        {modal === 'success' && (
+          <Modal>
+            <FiCheckCircle />
+
+            <MTitle>Login efetuado com sucesso!</MTitle>
+            <MDescription>
+              Bem vindo de volta!
+            </MDescription>
+
+            <Button type="button" onClick={handleSuccess} primary>
+              Continuar
+            </Button>
+          </Modal>
+        )}
+
+        {modal === 'not_active' && (
+          <Modal>
+            <FiAlertOctagon />
+
+            <MTitle>Sua conta ainda não foi ativada</MTitle>
+            <MDescription>
+              Ative sua conta clicando no link presente no email enviado,
+              não esqueça de checar a caixa de spam ou no lixo.
+            </MDescription>
+
+            <Button type="button" onClick={() => setModal(undefined)} primary>
+              Voltar
+            </Button>
+          </Modal>
+        )}
       </Container>
     </>
   );

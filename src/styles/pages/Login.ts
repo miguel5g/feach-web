@@ -54,3 +54,38 @@ export const Register = styled.a`
     color: ${({ theme }) => theme.txt.primary};
   }
 `;
+
+export const Modal = styled.div`
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  width: 100vw;
+  height: 100vh;
+  padding: 30px 100px;
+
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(1rem);
+
+  & > svg {
+    margin-bottom: 12px;
+    
+    color: ${({ theme }) => theme.app.primary};
+    font-size: 5rem;
+  }
+`;
+
+export const MTitle = styled.h4`
+  color: ${({ theme }) => theme.txt.primary};
+  font-size: 2rem;
+`;
+
+export const MDescription = styled.p`
+  max-width: 720px;
+  margin-bottom: 13px;
+
+  font-size: 1.2rem;
+`;

@@ -5,7 +5,11 @@ import { GetStaticProps } from 'next';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
 import {
-  FiLock, FiMail, FiPlus, FiUser,
+  FiCheckCircle,
+  FiLock,
+  FiMail,
+  FiPlus,
+  FiUser,
 } from 'react-icons/fi';
 
 import { proApi, devApi } from '../services/Api';
@@ -17,7 +21,10 @@ import {
   ButtonGroup,
   Container,
   Login,
+  SMDescription,
+  SMTitle,
   StyledForm,
+  SuccessModal,
   Title,
 } from '../styles/pages/Register';
 
@@ -30,8 +37,14 @@ interface IFormData {
 const Register: React.FC<IPageProps> = ({ env }) => {
   const router = useRouter();
   const [isEnable, setEnable] = useState(true);
+  const [isOpenModal, setOpenModal] = useState(false);
 
   const api = env === 'development' ? devApi : proApi;
+
+  function handleSuccess() {
+    localStorage.removeItem('@feach/user-data');
+    router.push('/login');
+  }
 
   function handleSubmit(data: IFormData) {
     if (!isEnable) return;
@@ -40,11 +53,7 @@ const Register: React.FC<IPageProps> = ({ env }) => {
 
     api.post('/user', data)
       .then(() => {
-        toast.success('Registro efetuado com sucesso!', { pauseOnHover: false });
-        setTimeout(() => {
-          setEnable(true);
-          router.push('/login');
-        }, 5000);
+        setOpenModal(true);
       })
       .catch(() => {
         setEnable(true);
@@ -109,6 +118,24 @@ const Register: React.FC<IPageProps> = ({ env }) => {
             <Login>Já tem uma conta? Clique aqui!</Login>
           </Link>
         </StyledForm>
+
+        {isOpenModal && (
+          <SuccessModal>
+            <FiCheckCircle />
+
+            <SMTitle>Conta criada com sucesso!</SMTitle>
+            <SMDescription>
+              Agora só mais uma coisinha e você está pronto!
+              <br />
+              Ative sua conta clicando no link presente no email enviado,
+              não esqueça de checar a caixa de spam ou no lixo.
+            </SMDescription>
+
+            <Button type="button" onClick={handleSuccess} primary>
+              Continuar
+            </Button>
+          </SuccessModal>
+        )}
       </Container>
     </>
   );
