@@ -125,10 +125,8 @@ const Register: React.FC<IPageProps> = ({ env }) => {
 
             <SMTitle>Conta criada com sucesso!</SMTitle>
             <SMDescription>
-              Agora só mais uma coisinha e você está pronto!
-              <br />
-              Ative sua conta clicando no link presente no email enviado,
-              não esqueça de checar a caixa de spam ou no lixo.
+              Agora só mais uma coisa para você estar pronto!
+              Vincule sua conta com o Discord para ativá-la
             </SMDescription>
 
             <Button type="button" onClick={handleSuccess} primary>

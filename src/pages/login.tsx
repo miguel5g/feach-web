@@ -46,11 +46,17 @@ const Login: React.FC<IPageProps> = ({ env }) => {
       .then(() => {
         setModal('success');
       })
-      .catch(({ response }: AxiosError) => {
-        const { status } = response;
+      .catch((err: AxiosError) => {
+        if (err.message === 'Network Error') {
+          toast.error('Algo deu errado, verifique os dados e tente novamente.');
+          setEnable(true);
+          return;
+        }
+
+        const { status } = err.response;
 
         if (status === 401) {
-          const { data: resData }: {data: {message: string}} = response;
+          const { data: resData }: {data: {message: string}} = err.response;
 
           if (resData.message === 'Account not activated') setModal('not_active');
           else toast.error('Algo deu errado, verifique os dados e tente novamente.');

@@ -138,8 +138,8 @@ const Header: React.FC<IHeaderProps> = ({ env }) => {
     <>
       <Container
         className={isOpen ? 'open' : ''}
-        initial={{ height: 70, opacity: 0 }}
-        animate={{ height: isOpen ? 'max-content' : 70, opacity: 1 }}
+        initial={{ height: 70 }}
+        animate={{ height: isOpen ? 'max-content' : 70 }}
       >
         <Logo src="/svg/logo.svg" />
 
