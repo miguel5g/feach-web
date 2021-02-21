@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Container = styled.div`
+export const Container = styled.footer`
   display: grid;
   align-items: center;
   grid-template-columns: 1fr 1fr 1fr;

@@ -19,6 +19,7 @@
     "puppeteer-core": "^5.5.0",
     "react": "17.0.1",
     "react-dom": "17.0.1",
+    "react-dropzone": "^11.3.1",
     "react-icons": "^4.1.0",
     "react-intersection-observer": "^8.31.0",
     "react-toastify": "^6.2.0",
@@ -28,6 +29,7 @@
   "devDependencies": {
     "@types/node": "^14.14.10",
     "@types/puppeteer-core": "^5.4.0",
+    "@types/react-dropzone": "^5.1.0",
     "@types/styled-components": "^5.1.4",
     "@typescript-eslint/eslint-plugin": "4.0.1",
     "@typescript-eslint/parser": "4.0.1",
